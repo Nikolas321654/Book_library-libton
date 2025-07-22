@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace libton
+namespace Libton
 {
     /// <summary>
     /// Interaction logic for App.xaml
