@@ -1,0 +1,137 @@
+﻿<Window x:Class="Libton.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Libton"
+        mc:Ignorable="d"
+        Title="Libton" Height="450" Width="800" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <Image x:Key="SearchIcon" Source="/Resources/SearchIcon.png"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="Libton"
+                       Height="40"
+                       Width="284" 
+                       FontSize="20"/>
+
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" 
+                       Height="20"
+                       Margin="10,0,0,0"
+                       FontSize="15"
+                       Text="Enter book name:"/>
+
+            <TextBox Grid.Row="2"
+                     x:Name="textBoxInput"
+                     HorizontalAlignment="Left" 
+                     VerticalAlignment="Center" 
+                     Height="20"
+                     Width="146"
+                     Margin="10,0,0,0"/>
+
+            <TextBlock Grid.Row="3" 
+                     x:Name="ErrorTextBlock"
+                     HorizontalAlignment="Left"
+                     Height="15"
+                     Margin="10,0,0,0"
+                     TextWrapping="Wrap"
+                     Text=""
+                     Foreground="Red"
+                     VerticalAlignment="Top"
+                     FontSize="10"
+                     Width="146"/>
+
+            <Button Grid.Row="3" 
+                    x:Name="AddButton"
+                    Content="Add" 
+                    HorizontalAlignment="Left" 
+                    Height="20" 
+                    Margin="10,13,0,0"
+                    VerticalAlignment="Top" 
+                    Width="64" 
+                    Click="AddButton_Click"/>
+
+            <Button Grid.Row="2" 
+                    x:Name="SearchButton"
+                    Content="{StaticResource SearchIcon}" 
+                    HorizontalAlignment="Left"
+                    Height="20"
+                    Margin="155,0,0,0" 
+                    VerticalAlignment="Bottom" 
+                    Width="20"
+                    Click="SearchButton_Click"/>
+
+            <TextBlock Grid.Row="5" Margin="10, 10, 0, 0">
+                <Run Text="Author:"/>
+                <Hyperlink NavigateUri="mailto:kolia.biliavskiy@gmail.com" 
+                           RequestNavigate="Hyperlink_RequestNavigate">
+                    kolia.biliavskiy@gmail.com
+                </Hyperlink>
+            </TextBlock>
+
+            <Border BorderBrush="Black" 
+                    BorderThickness="1"/>
+
+            <Border BorderBrush="Black"
+                    BorderThickness="2"
+                    Grid.RowSpan="6"/>
+
+            <Border BorderBrush="Black"
+                    BorderThickness="0, 2, 0, 0"
+                    Grid.Row="5"/>
+
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <DataGrid x:Name="LibTable"
+                      SelectionChanged="DataGrid_SelectionChanged" 
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn IsReadOnly="False" 
+                                            Header="Is read" 
+                                            Width="50"/>
+                    <DataGridTextColumn Binding="{Binding Path= DateTime}"
+                                        IsReadOnly="True" 
+                                        Header="Time"
+                                        Width="150"/>
+                    <DataGridTextColumn x:Name="BookNameGrid"
+                                        Binding="{Binding Path= BookName}" 
+                                        IsReadOnly="True"
+                                        Header="Name" 
+                                        Width="150"/>
+                    <DataGridTemplateColumn Header="Delete" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="DeleteButton_Click" 
+                                        x:Name="deleteButton">Delete</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>
