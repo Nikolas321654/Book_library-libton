@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using Libton.Models;
+using Libton.Views;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
@@ -10,20 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Libton.Models;
-using Libton.Views;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Libton
 {
-
     public partial class MainWindow : Window
     {
-        private BindingList<LibModel> _libData;
+        private BindingList<LibModel> _libraryBooks;
 
         public MainWindow()
         {
             InitializeComponent();
-            ErrorDialogService.InitializeErrorDisplay(ErrorTextBlock);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -35,16 +34,36 @@ namespace Libton
                 ErrorDialogService.ShowErrorMessage("Please enter a book name");
                 return;
             }
-            _libData.Add(new LibModel() { BookName = book });
+            _libraryBooks.Add(new LibModel() { BookName = book });
             textBoxInput.Text = string.Empty;
             ErrorTextBlock.Text = string.Empty;
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                var selectedRow = LibTable.SelectedItem as LibModel;
 
+                if (selectedRow == null)
+                {
+                    ErrorDialogService.ShowDialogError("No items selected for deletion");
+                    return;
+                }
+                _libraryBooks.Remove(selectedRow);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ErrorDialogService.ShowDialogError($"Can`t delete {ex.Message}");
+                Console.Write(ex.Message);
+            }
+            catch (Exception ex) 
+            {
+                ErrorDialogService.ShowDialogError($"unknown error {ex.Message}");
+                Console.Write("unknown error" + ex.Message);
+            }
         }
-
+        
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -57,13 +76,14 @@ namespace Libton
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+           
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _libData = new BindingList<LibModel>();
-            LibTable.ItemsSource = _libData;
+            _libraryBooks = new BindingList<LibModel>();
+            LibTable.ItemsSource = _libraryBooks;
+            ErrorDialogService.InitializeErrorDisplay(ErrorTextBlock);
         }
     }
 }

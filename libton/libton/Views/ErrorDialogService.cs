@@ -15,14 +15,25 @@ namespace Libton.Views
 
         public static void InitializeErrorDisplay(TextBlock ErrorTextBlock)
         {
-            _errorTextBlock = ErrorTextBlock;
+            _errorTextBlock = ErrorTextBlock; 
         }
 
         public static void ShowErrorMessage(string errorText) 
         {
-            _errorTextBlock.Text = errorText;
+            if(_errorTextBlock != null)
+                _errorTextBlock.Text = errorText;
+        }
+
+        public static void ShowDialogError(string errorText)
+        {
+            if (string.IsNullOrEmpty(errorText))
+            {
+                Console.WriteLine("Error text is null or empty");
+                return;
+            }
+
+            DialogWindow dialogWindow = new DialogWindow(errorText);
+            dialogWindow.Show();
         }
     }
 }
-
-
