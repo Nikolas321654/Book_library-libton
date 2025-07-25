@@ -8,12 +8,12 @@ namespace Libton.Models
 {
     class LibModel
     {
-        private string _book;
+        private string _bookName;
         public DateTime DateTime { get; set; } = DateTime.Now;
 
         public string BookName {
-            get { return _book; }
-            set {  _book = value; }
+            get { return _bookName; }
+            set {  _bookName = value; }
         }
     }
 }

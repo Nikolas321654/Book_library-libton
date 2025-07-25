@@ -1,4 +1,5 @@
-﻿using Libton.Models;
+﻿using libton;
+using Libton.Models;
 using Libton.Views;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -23,18 +24,21 @@ namespace Libton
         public MainWindow()
         {
             InitializeComponent();
+            _libraryBooks = new BindingList<LibModel>();
+            LibTable.ItemsSource = _libraryBooks;
+            ErrorDialogService.InitializeErrorDisplay(ErrorTextBlock);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            string book = textBoxInput.Text;
+            string bookName = (textBoxInput.Text).Trim();
            
-            if(string.IsNullOrEmpty(book))
+            if(string.IsNullOrEmpty(bookName))
             {
                 ErrorDialogService.ShowErrorMessage("Please enter a book name");
                 return;
             }
-            _libraryBooks.Add(new LibModel() { BookName = book });
+            _libraryBooks.Add(new LibModel() { BookName = bookName });
             textBoxInput.Text = string.Empty;
             ErrorTextBlock.Text = string.Empty;
         }
@@ -78,12 +82,15 @@ namespace Libton
         {
            
         }
-
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            InfoWindow infoWindow = new InfoWindow();
+            infoWindow.Show();
+        }
+      
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _libraryBooks = new BindingList<LibModel>();
-            LibTable.ItemsSource = _libraryBooks;
-            ErrorDialogService.InitializeErrorDisplay(ErrorTextBlock);
+
         }
     }
 }
