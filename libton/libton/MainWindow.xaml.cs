@@ -1,4 +1,6 @@
-﻿using Libton.Models;
+﻿using libton;
+using Libton.Models;
+using Libton.Servises;
 using Libton.Views;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -18,23 +20,26 @@ namespace Libton
 {
     public partial class MainWindow : Window
     {
+        private readonly string PATH = $"{Environment.CurrentDirectory}\\bookLibraryList.json";
         private BindingList<LibModel> _libraryBooks;
+        private FileIOService _fileIOService;
 
         public MainWindow()
         {
             InitializeComponent();
+            ErrorDialogService.InitializeErrorDisplay(ErrorTextBlock);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            string book = textBoxInput.Text;
+            string bookName = (textBoxInput.Text).Trim();
            
-            if(string.IsNullOrEmpty(book))
+            if(string.IsNullOrEmpty(bookName))
             {
                 ErrorDialogService.ShowErrorMessage("Please enter a book name");
                 return;
             }
-            _libraryBooks.Add(new LibModel() { BookName = book });
+            _libraryBooks.Add(new LibModel() { BookName = bookName });
             textBoxInput.Text = string.Empty;
             ErrorTextBlock.Text = string.Empty;
         }
@@ -63,7 +68,20 @@ namespace Libton
                 Console.Write("unknown error" + ex.Message);
             }
         }
-        
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e) 
+        {
+            try
+            {
+                _fileIOService.SaveData(_libraryBooks);
+            }
+            catch (Exception ex)
+            {
+                ErrorDialogService.ShowDialogError($"Save error {ex.Message}");
+                Console.Write("Save error" + ex.Message);
+            }
+        }
+
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -78,12 +96,25 @@ namespace Libton
         {
            
         }
-
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            InfoWindow infoWindow = new InfoWindow();
+            infoWindow.Show();
+        }
+      
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _libraryBooks = new BindingList<LibModel>();
-            LibTable.ItemsSource = _libraryBooks;
-            ErrorDialogService.InitializeErrorDisplay(ErrorTextBlock);
+            _fileIOService = new FileIOService(PATH);
+            try
+            {
+                _libraryBooks = _fileIOService.LoadData();
+                LibTable.ItemsSource = _libraryBooks;
+            }
+            catch (Exception ex)
+            {
+                ErrorDialogService.ShowDialogError(ex.Message);
+                Console.Write(ex.Message);
+            }
         }
     }
 }

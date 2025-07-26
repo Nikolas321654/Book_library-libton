@@ -1,0 +1,48 @@
+﻿<Window x:Class="libton.InfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:libton"
+        mc:Ignorable="d"
+        Title="InfoWindow" Height="350" Width="250">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0"
+                    FontSize="17"
+                   Text="About Libton"
+                   TextAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Black"/>
+
+        <TextBlock Grid.Row="1"
+                   Margin="10"
+                   FontSize="15"
+                   TextWrapping="Wrap"
+                   ><Run Text="This is your personal library for Windows. Here you can add, delete and  search your books.                     On the left side is functional panel."/><Run Language="uk-ua" Text=" "/><Run Text="On the right you can see all your books in a table format. All books are stored in a file on your local disk."/></TextBlock>
+        <TextBlock Grid.Row="2"
+                   FontSize="13"
+                   TextWrapping="Wrap"
+                   Text="Author: "
+                   Margin="10, 0, 0, 0"
+                   FontWeight="Bold"/>
+
+        <TextBlock Grid.Row="3"
+                   TextWrapping="Wrap" 
+                   Margin="10, 0, 0, 0">
+            <Hyperlink NavigateUri="kolia.biliavskiy@gmail.com">kolia.biliavskiy@gmail.com</Hyperlink>
+        </TextBlock>
+
+        <Button Grid.Row="4"
+                Content="Close"
+                FontSize="15"
+                FontWeight="Medium" Click="CloseButton_Click"/>
+    </Grid>
+</Window>

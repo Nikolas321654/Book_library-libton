@@ -73,6 +73,17 @@
                     Width="64" 
                     Click="AddButton_Click"/>
 
+
+            <Button Grid.Row="3" 
+                    x:Name="SaveButton"
+                    Content="Save" 
+                    HorizontalAlignment="Left" 
+                    Height="20" 
+                    Margin="100,13,0,0"
+                    VerticalAlignment="Top" 
+                    Width="64" 
+                    Click="SaveButton_Click"/>
+
             <Button Grid.Row="2" 
                     x:Name="SearchButton"
                     Content="{StaticResource SearchIcon}" 
@@ -83,14 +94,10 @@
                     Width="20"
                     Click="SearchButton_Click"/>
 
-            <TextBlock Grid.Row="5" Margin="10, 10, 0, 0">
-                <Run Text="Author:"/>
-                <Hyperlink NavigateUri="mailto:kolia.biliavskiy@gmail.com" 
-                           RequestNavigate="Hyperlink_RequestNavigate">
-                    kolia.biliavskiy@gmail.com
-                </Hyperlink>
-            </TextBlock>
-
+            <Button Grid.Row="5"
+                    Click="InfoButton_Click"
+                    Content="Info"/>
+            
             <Border BorderBrush="Black" 
                     BorderThickness="1"/>
 
@@ -113,16 +120,20 @@
                     <DataGridCheckBoxColumn IsReadOnly="False" 
                                             Header="Is read" 
                                             Width="50"/>
+                    
                     <DataGridTextColumn Binding="{Binding Path= DateTime}"
                                         IsReadOnly="True" 
                                         Header="Time"
                                         Width="150"/>
+                    
                     <DataGridTextColumn x:Name="BookNameGrid"
                                         Binding="{Binding Path= BookName}" 
                                         IsReadOnly="True"
                                         Header="Name" 
                                         Width="150"/>
-                    <DataGridTemplateColumn Header="Delete" Width="80">
+                    
+                    <DataGridTemplateColumn Header="Delete" 
+                                            Width="80">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Click="DeleteButton_Click" 
