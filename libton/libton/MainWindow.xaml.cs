@@ -1,5 +1,6 @@
 ﻿using libton;
 using Libton.Models;
+using Libton.Servises;
 using Libton.Views;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -19,13 +20,13 @@ namespace Libton
 {
     public partial class MainWindow : Window
     {
+        private readonly string PATH = $"{Environment.CurrentDirectory}\\bookLibraryList.json";
         private BindingList<LibModel> _libraryBooks;
+        private FileIOService _fileIOService;
 
         public MainWindow()
         {
             InitializeComponent();
-            _libraryBooks = new BindingList<LibModel>();
-            LibTable.ItemsSource = _libraryBooks;
             ErrorDialogService.InitializeErrorDisplay(ErrorTextBlock);
         }
 
@@ -67,7 +68,20 @@ namespace Libton
                 Console.Write("unknown error" + ex.Message);
             }
         }
-        
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e) 
+        {
+            try
+            {
+                _fileIOService.SaveData(_libraryBooks);
+            }
+            catch (Exception ex)
+            {
+                ErrorDialogService.ShowDialogError($"Save error {ex.Message}");
+                Console.Write("Save error" + ex.Message);
+            }
+        }
+
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -90,7 +104,17 @@ namespace Libton
       
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            _fileIOService = new FileIOService(PATH);
+            try
+            {
+                _libraryBooks = _fileIOService.LoadData();
+                LibTable.ItemsSource = _libraryBooks;
+            }
+            catch (Exception ex)
+            {
+                ErrorDialogService.ShowDialogError(ex.Message);
+                Console.Write(ex.Message);
+            }
         }
     }
 }

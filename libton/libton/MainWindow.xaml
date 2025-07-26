@@ -73,6 +73,17 @@
                     Width="64" 
                     Click="AddButton_Click"/>
 
+
+            <Button Grid.Row="3" 
+                    x:Name="SaveButton"
+                    Content="Save" 
+                    HorizontalAlignment="Left" 
+                    Height="20" 
+                    Margin="100,13,0,0"
+                    VerticalAlignment="Top" 
+                    Width="64" 
+                    Click="SaveButton_Click"/>
+
             <Button Grid.Row="2" 
                     x:Name="SearchButton"
                     Content="{StaticResource SearchIcon}" 
