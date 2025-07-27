@@ -4,6 +4,7 @@ using Libton.Servises;
 using Libton.Views;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,16 +31,24 @@ namespace Libton
             ErrorDialogService.InitializeErrorDisplay(ErrorTextBlock);
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private bool TryReadBookName(out string bookName)
         {
-            string bookName = (textBoxInput.Text).Trim();
-           
-            if(string.IsNullOrEmpty(bookName))
+            bookName = (textBoxInput.Text).Trim();
+            if (string.IsNullOrEmpty(bookName))
             {
                 ErrorDialogService.ShowErrorMessage("Please enter a book name");
-                return;
+                return false;
             }
-            _libraryBooks.Add(new LibModel() { BookName = bookName });
+
+            return true;
+        }
+
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!TryReadBookName(out string bookName)) return;
+
+            _libraryBooks.Add(new LibModel() { BookName =  bookName});
             textBoxInput.Text = string.Empty;
             ErrorTextBlock.Text = string.Empty;
         }
@@ -84,18 +93,29 @@ namespace Libton
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!TryReadBookName(out string bookName))
+            {
+                ErrorDialogService.ShowDialogError($"Can`t find the book");
+                return;
+            }
 
-        }
-
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-
+            try
+            {
+                var findBook = _libraryBooks.First((books) => books.BookName == bookName);
+                LibTable.SelectedItem = findBook;
+                LibTable.ScrollIntoView(findBook);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ErrorDialogService.ShowDialogError($"Book not found {ex.Message}");
+            }
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
+            // maybe in the future
         }
+
         private void InfoButton_Click(object sender, RoutedEventArgs e)
         {
             InfoWindow infoWindow = new InfoWindow();

@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         
         <TextBlock Grid.Row="0"
-                    FontSize="17"
+                   FontSize="17"
                    Text="About Libton"
                    TextAlignment="Center"
                    VerticalAlignment="Center"
@@ -25,8 +25,10 @@
         <TextBlock Grid.Row="1"
                    Margin="10"
                    FontSize="15"
-                   TextWrapping="Wrap"
-                   ><Run Text="This is your personal library for Windows. Here you can add, delete and  search your books.                     On the left side is functional panel."/><Run Language="uk-ua" Text=" "/><Run Text="On the right you can see all your books in a table format. All books are stored in a file on your local disk."/></TextBlock>
+                   TextWrapping="Wrap">
+            <Run Text="This is your personal library for Windows. Here you can add, delete and  search your books.                     On the left side is functional panel."/>
+            <Run Language="uk-ua" Text=" "/><Run Text="On the right you can see all your books in a table format. All books are stored in a file on your local disk."/></TextBlock>
+       
         <TextBlock Grid.Row="2"
                    FontSize="13"
                    TextWrapping="Wrap"
@@ -43,6 +45,7 @@
         <Button Grid.Row="4"
                 Content="Close"
                 FontSize="15"
-                FontWeight="Medium" Click="CloseButton_Click"/>
+                FontWeight="Medium"
+                Click="CloseButton_Click"/>
     </Grid>
 </Window>
