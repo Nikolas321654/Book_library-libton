@@ -1,14 +1,11 @@
-﻿using System.Configuration;
+﻿using Libton;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
 namespace Libton
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
     }
-
 }

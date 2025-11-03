@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Libton.Servises
 {
-    internal class FileIOService
+    public class FileIOService
     {
         public readonly string PATH;
 
@@ -19,33 +19,33 @@ namespace Libton.Servises
             PATH = path;
         }
        
-        public BindingList<LibModel> LoadData()
+        public BindingList<BookModel> LoadData()
         {
             var fileExist = File.Exists(PATH);
             
             if (!fileExist) 
             {
                 File.CreateText(PATH).Dispose();
-                return new BindingList<LibModel>();
+                return new BindingList<BookModel>();
             }
             
             var fileText = File.ReadAllText(PATH);
 
             if (string.IsNullOrEmpty(fileText)) 
-                return new BindingList<LibModel>();
+                return new BindingList<BookModel>();
 
             try
             {
-                var res = JsonConvert.DeserializeObject<BindingList<LibModel>>(fileText);
-                return res ?? new BindingList<LibModel>();
+                var res = JsonConvert.DeserializeObject<BindingList<BookModel>>(fileText);
+                return res ?? new BindingList<BookModel>();
             }
             catch
             {
-                return new BindingList<LibModel>();
+                return new BindingList<BookModel>();
             }
         }
 
-        public void SaveData(BindingList<LibModel> libraryBooks) 
+        public void SaveData(BindingList<BookModel> libraryBooks) 
         {
             if (libraryBooks == null)
                 throw new ArgumentNullException(nameof(libraryBooks));

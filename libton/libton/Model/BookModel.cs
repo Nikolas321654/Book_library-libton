@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Libton.Models
 {
-    class LibModel
+    public class BookModel
     {
         private string _bookName;
         public DateTime DateTime { get; set; } = DateTime.Now;
-
-        public string BookName {
+        public bool IsRead { get; set; } = false;
+        public string BookName
+        {
             get { return _bookName; }
-            set {  _bookName = value; }
+            set { _bookName = value; }
         }
     }
 }

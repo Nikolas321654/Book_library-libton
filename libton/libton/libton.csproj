@@ -9,11 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <Compile Remove="InfoWindow.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\SearchIcon.png" />
+    <Page Remove="InfoWindow.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

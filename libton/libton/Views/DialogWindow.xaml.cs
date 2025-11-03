@@ -1,5 +1,4 @@
-﻿using Libton.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +16,10 @@ namespace Libton
 {
     public partial class DialogWindow : Window
     {
-        public DialogWindow(string errorText)
+        public DialogWindow(string message)
         {
             InitializeComponent();
-            DialogText.Text = errorText;
+            DialogText.Text = message;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
